@@ -1,3 +1,3 @@
 # homework
 
-first commit
+This repository is to store my personal homework
