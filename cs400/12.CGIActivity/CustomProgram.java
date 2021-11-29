@@ -9,13 +9,13 @@ public class CustomProgram {
 		ArrayList<String> list = new ArrayList<>();
 		while (in.hasNextLine())
 			list.add(in.nextLine());
-		ArrayList<String> temp = list;
 		// update list to reflect changes requested through command line args
 		// TODO: Complete this section
 		ArrayList<String> newList = new ArrayList<>();
 		newList = (ArrayList<String>) list.clone();
 		String name = "";
 		String backgroundColor;
+		boolean suppress = false;
 		if (args.length > 0)
 			for (String arg : args[0].split("&")) {
 				String[] keyValuePair = arg.split("=");
@@ -66,7 +66,6 @@ public class CustomProgram {
 							break;
 						}
 						newList.set(45, "<p>Page Updated: " + java.time.LocalDateTime.now() + "</p></body>");
-						list = newList;
 						break;
 					case "SuppressOptions":
 						// TODO: when this argument is present and =true, the
@@ -74,9 +73,12 @@ public class CustomProgram {
 						// Everything from and including the <h1> label through the
 						// final </ul> should be omitted to accomplish this.
 						if (keyValuePair[1].equals("true")) {
-							list = temp;
+							suppress = true;
 						}
 						break;
+				}
+				if (!suppress) {
+					list = newList;
 				}
 			}
 
