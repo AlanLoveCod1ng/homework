@@ -77,8 +77,11 @@ public class CustomProgram {
 						}
 						break;
 				}
-				if (!suppress) {
-					list = newList;
+				list = newList;
+				if (suppress) {
+					for (int i = 27; i < 45; i++) {
+						list.set(i, "");
+					}
 				}
 			}
 
