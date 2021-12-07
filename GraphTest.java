@@ -75,6 +75,40 @@ public class GraphTest {
                 "[A, C, F]"));
     }
 
+    // the source vertex is D, the furthest vertex is B
+
+    @Test
+    public void testPathCostDtoB() {
+        assertTrue(graph.getPathCost("D", "B") == 12);
+    }
+
+    @Test
+    public void testPathDtoB() {
+        assertTrue(graph.shortestPath("D", "B").toString().equals(
+                "[D, E, A, C, B]"));
+    }
+
+    // E to F cost
+
+    @Test
+    public void testPathCostEtoF() {
+        assertTrue(graph.getPathCost("E", "F") == 7);
+    }
+
+    // C to E predecessor
+
+    @Test
+    public void testPredecessorCtoE() {
+        assertTrue(graph.shortestPath("C", "E").get(graph.shortestPath("C", "E").size() - 2).equals(
+                "B"));
+    }
+
+    @Test
+    public void testPathCtoE() {
+        assertTrue(graph.shortestPath("C", "E").toString().equals(
+                "[C, B, E]"));
+    }
+
     public static void main(String[] args) {
         String className = MethodHandles.lookup().lookupClass().getName();
         String classPath = System.getProperty("java.class.path").replace(" ", "\\ ");
