@@ -1,3 +1,5 @@
+package cs400.diji;
+
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Hashtable;
