@@ -3,7 +3,7 @@ import java.util.NoSuchElementException;
 
 /**
  * This ADT represents a directed graph data structure with positive edge
- * weights.
+ * weights
  *
  * @param <T> the data type stored at each graph vertex
  */

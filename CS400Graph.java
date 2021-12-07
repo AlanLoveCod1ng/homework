@@ -291,6 +291,10 @@ public class CS400Graph<T> implements GraphADT<T> {
             // TODO: Implement this constructor in Step 5.
             this.start = copyPath.start;
             this.distance = copyPath.distance + extendBy.weight;
+            this.dataSequence = new LinkedList<>();
+            for (T data : copyPath.dataSequence) {
+                this.dataSequence.add(data);
+            }
             this.dataSequence.add(extendBy.target.data);
             this.end = extendBy.target;
         }
@@ -372,10 +376,16 @@ public class CS400Graph<T> implements GraphADT<T> {
                     // then we update distanceTable and pathQueue
                     if (distanceTable.containsKey(nextVertex)
                             && distanceTable.get(nextVertex).distance > (currentPath.distance + e.weight)) {
-                        currentPath = new Path(currentPath, e);
+                        Path newPath = new Path(currentPath, e);
                         pathQueue.remove(distanceTable.get(nextVertex));
-                        pathQueue.add(currentPath);
-                        distanceTable.put(nextVertex, currentPath);
+                        pathQueue.add(newPath);
+
+                        distanceTable.put(nextVertex, newPath);
+                    }
+                    if (!distanceTable.containsKey(nextVertex)) {
+                        Path newPath = new Path(currentPath, e);
+                        pathQueue.add(newPath);
+                        distanceTable.put(nextVertex, newPath);
                     }
                 }
             }
