@@ -1,3 +1,10 @@
+// --== CS400 File Header Information ==--
+// Name: <Bingxu Hu>
+// Email: <bhu62@wisc.edu>
+// Team: <DO>
+// TA: <Yuyue>
+// Lecturer: <Florian>
+// Notes to Grader: <optional extra notes>
 package cs400.diji;
 
 import java.nio.file.Path;
@@ -351,39 +358,50 @@ public class CS400Graph<T> implements GraphADT<T> {
                                                                   // other vertex
         PriorityQueue<Path> pathQueue = new PriorityQueue<>();
 
+        // case that start and end refer to same vertex
         if (startVertex == endVertex)
             return new Path(startVertex);
+
+        // add all edge leaving the start vertex as a path to pathQueue and
+        // distanceTable.
         for (Edge e : startVertex.edgesLeaving) {
             // add paths which from the start vertex to next vertex
             Path startPath = new Path(new Path(startVertex), e);
             distanceTable.put(e.target, startPath);
             pathQueue.add(startPath);
         }
+        // once we iterate the edge leaving the vertex, this vertex will be marked
+        // visited
         vertexVisited.add(startVertex);
 
         while (!pathQueue.isEmpty()) {
             Path currentPath = pathQueue.poll();
             Vertex currentVertex = currentPath.end;
+            // once we get the vertex which is the end of polled path, it will be marked
+            // visited
             vertexVisited.add(currentVertex);
             // if we reach the end vertex return the path
             if (currentVertex == endVertex) {
                 return currentPath;
             }
+            // if not we iterate the edges leaving it.
             for (Edge e : currentVertex.edgesLeaving) {
                 Vertex nextVertex = e.target;
                 // if the next vertex is not visited then update their current shortest path
                 if (!vertexVisited.contains(nextVertex)) {
-                    // if we previously have path to next vertex and the previous path is larger
-                    // than current path
+                    // if we previously have path to next vertex and the path is larger
+                    // than current path plus weight
                     // then we update distanceTable and pathQueue
                     if (distanceTable.containsKey(nextVertex)
                             && distanceTable.get(nextVertex).distance > (currentPath.distance + e.weight)) {
                         Path newPath = new Path(currentPath, e);
+                        // update the path in the pathQueue
                         pathQueue.remove(distanceTable.get(nextVertex));
                         pathQueue.add(newPath);
-
+                        // update the path in the distanceTable
                         distanceTable.put(nextVertex, newPath);
                     }
+                    // if we have no path to next vertex yet, then we add the path to it
                     if (!distanceTable.containsKey(nextVertex)) {
                         Path newPath = new Path(currentPath, e);
                         pathQueue.add(newPath);
@@ -392,6 +410,8 @@ public class CS400Graph<T> implements GraphADT<T> {
                 }
             }
         }
+        // After finishing searching, we don't found path to end vertex, so we throw
+        // exception.
         throw new NoSuchElementException("No path from start vertex to end vertex.");
         // TODO: Implement this method in Step 7.
     }

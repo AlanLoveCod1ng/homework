@@ -1,3 +1,10 @@
+// --== CS400 File Header Information ==--
+// Name: <Bingxu Hu>
+// Email: <bhu62@wisc.edu>
+// Team: <DO>
+// TA: <Yuyue>
+// Lecturer: <Florian>
+// Notes to Grader: <optional extra notes>
 package cs400.diji;
 
 import org.junit.jupiter.api.Test;
